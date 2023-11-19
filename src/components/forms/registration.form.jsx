@@ -74,7 +74,7 @@ export const RegistrationForm = () => {
           Register
         </button>
 
-        <p className={"text-r"}>Already have an Account ?<p className={"text-r"}> Register</p></p>
+        <div className="flex items-center"><p className={"text-r"}>Already have an Account ?</p><p className={"ml-2 text-r"}> Login</p></div>
       </div>
     </>
   );
