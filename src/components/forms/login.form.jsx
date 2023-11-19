@@ -1,9 +1,10 @@
 import {useState} from "react";
 import axiosInstance from "../../utils/request.helper";
+import { useNavigate } from "react-router-dom";
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useNavigate();
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -17,7 +18,7 @@ export const LoginForm = () => {
     const response  = await axiosInstance.post("/users/login", {email: email, password: password});
     console.log(response?.data?.success);
     if (response?.data?.success) {
-
+      navigate("/profile");
     }
   }
 

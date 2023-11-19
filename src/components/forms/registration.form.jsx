@@ -1,4 +1,30 @@
+import { useState } from "react";
+import axiosInstance from "../../utils/request.helper";
+import { useNavigate } from "react-router-dom";
+
 export const RegistrationForm = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  
+  const handleNameChange = (event) => setName(event.target.value);
+  const handleEmailChange = (event) => setEmail(event.target.value);
+  const handlePasswordChange = (event) => setPassword(event.target.value);
+  const handleConfirmPasswordChange = (event) => setConfirmPassword(event.target.value);
+
+  const handleRegister = async (name, email, password, confirmPassword) => {
+    if(password === confirmPassword) {
+      const createUser = await axiosInstance.post("/users/register", {name: name,email: email, password: password, role: 'User'});
+
+      if(createUser?.data?.success) {
+        alert("User created, Please login");
+        navigate("/login");
+      }
+    }
+  }
+
   return (
     <>
       <div className={"block"}>
@@ -7,9 +33,9 @@ export const RegistrationForm = () => {
             Name
           </label>
           <input
+            value={name} onChange={handleNameChange}
             className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="name" type="text" placeholder="Enter your name here" />
-          {/*<p className="text-red-500 text-xs italic">Please provide a valid email.</p>*/}
         </div>
 
         <div className="mb-6">
@@ -17,9 +43,9 @@ export const RegistrationForm = () => {
             Email
           </label>
           <input
+            value={email} onChange={handleEmailChange}
             className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="email" type="text" placeholder="Enter your email here" />
-          {/*<p className="text-red-500 text-xs italic">Please provide a valid email.</p>*/}
         </div>
 
         <div className="mb-6">
@@ -27,9 +53,9 @@ export const RegistrationForm = () => {
             Password
           </label>
           <input
+            value={password} onChange={handlePasswordChange}
             className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            id="password" type="text" placeholder="Enter your password here" />
-          {/*<p className="text-red-500 text-xs italic">Please provide a valid password.</p>*/}
+            id="password" type="password" placeholder="Enter your password here" />        
         </div>
 
         <div className="mb-6">
@@ -37,12 +63,14 @@ export const RegistrationForm = () => {
             Confirm password
           </label>
           <input
+            value={confirmPassword} onChange={handleConfirmPasswordChange}
             className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            id="confirmPassword" type="text" placeholder="Confirm you password" />
-          {/*<p className="text-red-500 text-xs italic">Please provide a valid password.</p>*/}
+            id="confirmPassword" type="password" placeholder="Confirm you password" />
         </div>
 
-        <button className="w-full bg-black hover:bg-dark-700 text-white font-bold py-2 px-4 rounded">
+        <button 
+          onClick={() => handleRegister(name, email, password, confirmPassword)}
+          className="w-full bg-black hover:bg-dark-700 text-white font-bold py-2 px-4 rounded">
           Register
         </button>
 
