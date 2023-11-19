@@ -3,11 +3,7 @@ import { Navbar } from "../../components/navbar";
 
 
 export default function Login() {
-  // const router = useRouter();
 
-  // const changeRoute = async (url: string) => {
-  //   await router.push(url);
-  // }
 
   return (
     <>

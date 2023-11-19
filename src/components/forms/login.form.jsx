@@ -1,10 +1,6 @@
-'use client'
 import {useState} from "react";
-import axiosInstance from "@/utils/request.helper";
-import { redirect } from 'next/navigation';
-
+import axiosInstance from "../../utils/request.helper";
 export const LoginForm = () => {
-  // const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,14 +12,12 @@ export const LoginForm = () => {
     setPassword(event.target.value);
   };
 
-//   const changeRoute = (url: string) => {
-//     // router.push(url);
-//   }
+
   const fetchUserInfo = async (email, password) => {
     const response  = await axiosInstance.post("/users/login", {email: email, password: password});
     console.log(response?.data?.success);
     if (response?.data?.success) {
-      redirect("/profile");
+
     }
   }
 
